@@ -1,0 +1,9 @@
+eturn "HelloWorld";
+    }
+
+    // 항상 오류는 발생 시키는 API
+    @GetMapping(value = "/api/helloException")
+    public String helloException() {
+        throw new RuntimeException("Hello RuntimeException");
+    }
+}
