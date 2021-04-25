@@ -1,62 +1,43 @@
 package com.fastcampus.javaallinone.project3.mycontact.service;
 
-import com.fastcampus.javaallinone.project3.mycontact.domain.Block;
 import com.fastcampus.javaallinone.project3.mycontact.domain.Person;
-import com.fastcampus.javaallinone.project3.mycontact.repositroy.BlockRepository;
 import com.fastcampus.javaallinone.project3.mycontact.repositroy.PersonRepository;
+import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-@SpringBootTest
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
 class PersonServiceTest {
 
-    @Autowired
+    @InjectMocks
     private PersonService personService;
-
-    @Autowired
+    @Mock
     private PersonRepository personRepository;
 
-    @Autowired
-    private BlockRepository blockRepository;
+    @Test
+    void getPeopleByName() {
+        when(personRepository.findByName("martin"))
+                .thenReturn(Lists.newArrayList(new Person("martin")));
+
+        List<Person> result = personService.getPeopleByName("martin");
+
+        assertThat(result.size()).isEqualTo(1);
+        assertThat(result.get(0).getName()).isEqualTo("martin");
+    }
 
     @Test
-    void getPeopleExcludeBlocks() {
-        givenPeople();
-        givenBlocks();
+    void getPerson() {
+        Person person = personService.getPerson(3L);
 
-        List<Person> result = personService.getPeopleExcludeBlocks();
-
-//        System.out.println(result);
-        result.forEach(System.out::println);
-    }
-
-    private void givenPeople() {
-        givenPerson("martin", 10, "A");
-        givenPerson("david", 9, "B");
-        givenBlockPerson("dennis", 7, "O");
-        givenBlockPerson("martin", 11, "AB");
-    }
-
-    private void givenBlocks() {
-        givenBlock("martin");
-    }
-
-    private void givenPerson(String name, int age, String bloodType) {
-        personRepository.save(new Person(name, age, bloodType));
-    }
-
-    private void givenBlockPerson(String name, int age, String bloodType) {
-        Person blockPerson = new Person(name, age, bloodType);
-        blockPerson.setBlock(givenBlock(name));
-
-        personRepository.save(blockPerson);
-    }
-
-    private Block givenBlock(String name) {
-        return blockRepository.save(new Block(name));
+        assertThat(person.getName()).isEqualTo("dennis");
     }
 
 }
