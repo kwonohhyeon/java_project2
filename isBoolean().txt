@@ -1,0 +1,17 @@
+ @Test
+    void getPerson() throws Exception {
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/api/person/1"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("martin"))
+                .andExpect(jsonPath("hobby").isEmpty())
+                .andExpect(jsonPath("address").isEmpty())
+                .andExpect(jsonPath("$.birthday.yearOfBirthday").value(1991))
+                .andExpect(jsonPath("$.birthday.monthOfBirthday").value(8))
+                .andExpect(jsonPath("$.birthday.dayOfBirthday").value(15))
+                .andExpect(jsonPath("$.phoneNumber").isEmpty())
+                .andExpect(jsonPath("$.deleted").value(false))
+                .andExpect(jsonPath("$.age").isNumber())
+                .andExpect(jsonPath("$.birthdayToday").isBoolean());
+    }
