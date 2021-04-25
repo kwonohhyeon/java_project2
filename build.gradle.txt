@@ -1,16 +1,27 @@
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-    
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.projectlombok:lombok:1.18.18'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.junit.platform:junit-platform-launcher:1.5.0'
+
+    // JPA
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'com.h2database:h2'
 
-   
+    // Lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
-    
-    testImplementation "org.junit.jupiter:junit-jupiter-api:5.5.2"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.5.2"
+    // Junit 5
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.5.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter'
+
+    // @Valid
+    implementation 'org.springframework.boot:spring-boot-starter-validation:2.4.5'
+
+    // Mock
+    implementation 'org.mockito:mockito-junit-jupiter'
+
 }
